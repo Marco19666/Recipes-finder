@@ -621,3 +621,9 @@ body[data-theme="dark"] .salvasoldi-status{background:#293b2d;color:#d6e5d2}
 body[data-theme="dark"] .salvasoldi-status.is-error{background:#452c27;color:#f0c7b9}
 body[data-theme="dark"] .salvasoldi-alternatives{background:#333329}
 @media(max-width:520px){.salvasoldi-panel{padding:16px}.salvasoldi-form-grid,.salvasoldi-cost-summary{grid-template-columns:1fr}.salvasoldi-checks{display:grid;grid-template-columns:1fr 1fr}.salvasoldi-tab{flex:1;padding:12px 6px;font-size:12px}}
+
+.salvasoldi-budget-result{padding:11px 13px;border-radius:9px;font-size:13px;font-weight:700}
+.salvasoldi-budget-result.is-within{background:#e8f2e5;color:#315f37}
+.salvasoldi-budget-result.is-over{background:#fff0df;color:#89551c}
+body[data-theme="dark"] .salvasoldi-budget-result.is-within{background:#293b2d;color:#d6e5d2}
+body[data-theme="dark"] .salvasoldi-budget-result.is-over{background:#493724;color:#f4d2a4}
