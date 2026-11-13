@@ -600,7 +600,7 @@ async def salvasoldi(request: Request):
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": task},
                 ],
-                "max_tokens": 1400,
+                "max_tokens": 2200,
                 "temperature": 0.25,
                 "chat_template_kwargs": {"enable_thinking": False},
             }),
