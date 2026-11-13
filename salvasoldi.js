@@ -8,14 +8,15 @@
   const launch = ids("show-salvasoldi");
   const home = ids("welcome");
   const hideOtherSections = () => {
-    ["results-section","favorites-section","personal-section","history-section","shopping-section"].forEach(id => { const node=ids(id); if(node) node.hidden=true; });
+    ["results-section","favorites-section","personal-section","history-section","shopping-section","archimede-section","chef-section"].forEach(id => { const node=ids(id); if(node) node.hidden=true; });
     const tryRecipes=document.querySelector(".try-recipes-section"); if(tryRecipes) tryRecipes.hidden=true;
     const daily=ids("daily-recipe-section"); if(daily) daily.hidden=true;
     if(home) home.hidden=true;
+    const hero=document.querySelector(".hero"); if(hero) hero.hidden=true;
   };
   const show = () => { hideOtherSections(); section.hidden=false; window.scrollTo({top:0,behavior:"smooth"}); };
   launch?.addEventListener("click",show);
-  ids("salvasoldi-back")?.addEventListener("click",() => { section.hidden=true; if(home) home.hidden=false; const daily=ids("daily-recipe-section"); if(daily) daily.hidden=false; const tries=document.querySelector(".try-recipes-section"); if(tries) tries.hidden=false; });
+  ids("salvasoldi-back")?.addEventListener("click",() => { section.hidden=true; if(home) home.hidden=false; const hero=document.querySelector(".hero"); if(hero) hero.hidden=false; const daily=ids("daily-recipe-section"); if(daily) daily.hidden=false; const tries=document.querySelector(".try-recipes-section"); if(tries) tries.hidden=false; });
   function setTab(which) {
     const budget=which==="budget";
     ids("budget-panel").hidden=!budget; ids("cost-panel").hidden=budget;
@@ -25,6 +26,24 @@
   }
   ids("budget-tab").addEventListener("click",()=>setTab("budget"));
   ids("cost-tab").addEventListener("click",()=>setTab("cost"));
+  const deviceKey="cosa-cucino-salvasoldi-device-v1";
+  function deviceId(){
+    let id=localStorage.getItem(deviceKey);
+    if(!id){
+      id=crypto.randomUUID?crypto.randomUUID():"salvasoldi-"+Date.now()+"-"+Math.random().toString(36).slice(2);
+      localStorage.setItem(deviceKey,id);
+    }
+    return id;
+  }
+  const deviceKey="cosa-cucino-salvasoldi-device-v1";
+  function deviceId(){
+    let id=localStorage.getItem(deviceKey);
+    if(!id){
+      id=crypto.randomUUID?crypto.randomUUID():"salvasoldi-"+Date.now()+"-"+Math.random().toString(36).slice(2);
+      localStorage.setItem(deviceKey,id);
+    }
+    return id;
+  }
   const euro = value => new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"}).format(Number(value)||0);
   const safe = value => String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
   function setStatus(message,error=false){status.textContent=message;status.hidden=false;status.classList.toggle("is-error",error);}
@@ -65,13 +84,13 @@
     const courses=[...document.querySelectorAll('input[name="course"]:checked')].map(input=>input.value);
     if(!Number.isFinite(budget)||budget<=0||!Number.isInteger(people)||people<1||!courses.length){setStatus("Inserisci un budget valido, il numero di persone e almeno una portata.",true);return;}
     const button=event.currentTarget.querySelector('button[type="submit"]');
-    request({mode:"create_menu",budget_per_person:budget,people,courses,diet:ids("budget-diet").value,notes:ids("budget-notes").value.trim(),currency:"EUR",locale:"it-IT"},button,"budget");
+    request({device_id:deviceId(),mode:"create_menu",budget_per_person:budget,people,courses,diet:ids("budget-diet").value,notes:ids("budget-notes").value.trim(),currency:"EUR",locale:"it-IT"},button,"budget");
   });
   ids("cost-form").addEventListener("submit",event=>{
     event.preventDefault();
     const menu=ids("cost-menu").value.trim(),people=Number(ids("cost-people").value);
     if(menu.length<3||!Number.isInteger(people)||people<1){setStatus("Descrivi almeno un piatto e indica un numero di persone valido.",true);return;}
     const button=event.currentTarget.querySelector('button[type="submit"]');
-    request({mode:"calculate_cost",menu,people,currency:"EUR",locale:"it-IT"},button,"cost");
+    request({device_id:deviceId(),mode:"calculate_cost",menu,people,currency:"EUR",locale:"it-IT"},button,"cost");
   });
 })();
