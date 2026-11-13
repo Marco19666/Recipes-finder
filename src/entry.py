@@ -657,7 +657,6 @@ async def salvasoldi(request: Request):
         dishes = data.get("dishes") if isinstance(data.get("dishes"), list) else []
         ingredients = data.get("ingredients") if isinstance(data.get("ingredients"), list) else []
         alternatives = data.get("alternatives") if isinstance(data.get("alternatives"), list) else []
-        import math
         if not ingredients or len(ingredients) > 80:
             raise RuntimeError("La risposta non contiene una lista ingredienti completa.")
         if mode == "create_menu" and not dishes:
