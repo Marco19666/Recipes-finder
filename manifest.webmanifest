@@ -1,0 +1,19 @@
+{
+  "name": "Cosa Cucino?",
+  "short_name": "Cosa Cucino",
+  "description": "Trova ogni giorno idee e ricette dai tuoi siti di cucina preferiti.",
+  "lang": "it",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f4ee",
+  "theme_color": "#3f6245",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

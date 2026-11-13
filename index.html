@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3f6245">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon.svg">
+  <meta name="description" content="Cosa Cucino? Trova ogni giorno idee e ricette dai tuoi siti di cucina preferiti.">
+  <title>Cosa Cucino? — trova la tua prossima ricetta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=28">
+</head>
+<body>
+  <div id="app-splash" class="app-splash" role="status" aria-live="polite" aria-label="Caricamento di Cosa Cucino?">
+    <div class="splash-content"><span class="splash-mark" aria-hidden="true">C</span><div class="splash-name">Cosa Cucino<span>?</span></div><p>Scopri ogni giorno il menu che abbiamo preparato per te</p><span class="splash-loader" aria-hidden="true"><i></i><i></i><i></i></span></div>
+  </div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Cosa Cucino? home"><span class="brand-mark">C</span><span>Cosa Cucino<span class="brand-dot">?</span></span></a>
+    <div class="top-actions"><span class="top-note">Ispirazione, ogni giorno</span><button id="theme-toggle" class="utility-toggle" type="button" aria-pressed="false">☾ Tema scuro</button><button id="wake-toggle" class="utility-toggle" type="button" aria-pressed="false">♧ Schermo sempre acceso</button><button id="install-app" class="install-app-button" type="button">＋ Installa app</button></div>
+  </header>
+  <main>
+    <section id="daily-recipe-section" class="results-section daily-recipe-section">
+      <div class="section-heading"><div><div class="eyebrow">L’ISPIRAZIONE DI OGGI</div><h2>Ricetta del giorno</h2></div><span class="result-count">Una nuova idea ogni giorno</span></div>
+      <div id="daily-recipe" class="results-grid"><div class="empty-state">Sto scegliendo la ricetta di oggi...</div></div>
+    </section>
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> IL PROSSIMO PIATTO PARTE DA QUI</div>
+      <h1>Che delizia<br><em>prepariamo oggi?</em></h1>
+      <p class="hero-copy">Lasciati ispirare, trova qualcosa di buono da portare in tavola!</p>
+      <form id="search-form" class="search-form">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="query" type="search" placeholder="Es. pasta al pesto, torta di mele..." autocomplete="off" minlength="2" required>
+        <button type="submit">Cerca ricette <span aria-hidden="true">↗</span></button>
+      </form>
+      <div class="site-chooser" role="group" aria-label="Siti su cui cercare le ricette">
+        <div class="site-chooser-title">Cerca su questi siti</div>
+        <label class="site-option site-all"><input id="sites-all" type="checkbox" checked> Tutti i siti</label>
+        <div class="site-options">
+          <label class="site-option"><input type="checkbox" name="search-site" value="misya.info" checked> Misya</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="cookist.it" checked> Cookist</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="cucchiaio.it" checked> Cucchiaio d'Argento</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="fattoincasadabenedetta.it" checked> Fatto in casa da Benedetta</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="ricettedellanonna.net" checked> Ricette della Nonna</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="tavolartegusto.it" checked> Tavolartegusto</label>
+        </div>
+      </div>
+      <div class="home-actions"><button id="show-favorites" class="favorites-home-button" type="button">♡ Ricette preferite <span id="favorites-count">0</span></button><button id="show-personal" class="favorites-home-button" type="button">＋ Le mie ricette <span id="personal-count">0</span></button><button id="show-shopping" class="favorites-home-button" type="button">🛒 Lista della spesa <span id="shopping-count">0</span></button><button id="show-history" class="favorites-home-button" type="button">⌕ Ultime ricerche</button></div>
+      <section class="try-recipes-section" aria-labelledby="try-recipes-title"><div class="section-heading"><div><div class="eyebrow">CINQUE IDEE NUOVE OGNI GIORNO</div><h2 id="try-recipes-title">Prova oggi</h2></div><span id="try-recipes-count" class="result-count">5 ricette da scoprire</span></div><div id="try-recipes" class="results-grid"><div class="empty-state">Sto preparando le idee di oggi...</div></div></section>
+      <div class="source-line"><span class="source-dot"></span> Fonti selezionate: Misya, Cookist, Cucchiaio d'Argento e altri</div>
+    </section>
+    <section id="results-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LA SELEZIONE PER TE</div><h2 id="results-title">Risultati</h2></div><span id="result-count" class="result-count"></span></div>
+      <div id="search-progress" class="search-progress" role="status" aria-live="polite" hidden><div class="search-progress-top"><span class="search-spinner" aria-hidden="true"></span><div class="search-progress-copy"><strong id="search-progress-title">Avvio ricerca...</strong><p id="search-progress-detail"></p></div></div><div class="progress-track"><div id="search-progress-bar"></div></div></div>
+      <div id="results" class="results-grid"></div>
+    </section>
+    <section id="favorites-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LA TUA RACCOLTA</div><h2>Ricette preferite</h2></div><button id="back-home" class="back-home-button" type="button">Torna alla home</button></div>
+      <div class="personal-tools"><input id="favorites-search" type="search" placeholder="Cerca nelle ricette preferite..."><select id="favorites-category-filter" aria-label="Filtra per categoria"><option value="">Tutte le categorie</option><option>Primo</option><option>Secondo</option><option>Contorno</option><option>Antipasto</option><option>Dolce</option><option>Altro</option></select></div><div id="favorites-grid" class="results-grid"></div>
+    </section>
+    <section id="personal-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">IL TUO RICETTARIO</div><h2>Le mie ricette</h2></div><button id="personal-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <div class="personal-tools"><input id="personal-search" type="search" placeholder="Cerca nelle mie ricette..."><select id="personal-category-filter" aria-label="Filtra per categoria"><option value="">Tutte le categorie</option><option>Primo</option><option>Secondo</option><option>Contorno</option><option>Antipasto</option><option>Dolce</option><option>Altro</option></select></div><div id="personal-grid" class="results-grid"></div>
+      <div class="personal-add-area"><button id="personal-add" class="recipe-button" type="button">＋ Aggiungi ricetta</button></div>
+      <form id="personal-form" class="personal-form" hidden>
+        <h3>Aggiungi una ricetta personale</h3>
+        <label for="personal-title">Nome della ricetta</label><input id="personal-title" required maxlength="100" placeholder="Es. Lasagne della nonna">
+        <label for="personal-category">Categoria</label><select id="personal-category"><option>Primo</option><option>Secondo</option><option>Contorno</option><option>Antipasto</option><option>Dolce</option><option selected>Altro</option></select>
+        <label for="personal-ingredients">Ingredienti</label><textarea id="personal-ingredients" required rows="4" placeholder="Scrivi gli ingredienti, uno per riga"></textarea>
+        <label for="personal-steps">Preparazione</label><textarea id="personal-steps" required rows="5" placeholder="Descrivi i passaggi, uno per riga"></textarea>
+        <label for="personal-photo">Foto della ricetta (facoltativa)</label><input id="personal-photo" type="file" accept="image/*">
+        <label for="personal-time">Tempo di preparazione (minuti, facoltativo)</label><input id="personal-time" type="number" min="1" max="1440" placeholder="Es. 45">
+        <button type="submit" class="recipe-button">Salva ricetta personale</button>
+      </form>
+
+    </section>
+    <section id="history-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LE TUE RICERCHE</div><h2>Ultime ricerche</h2></div><button id="history-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <p class="shopping-hint">Le ultime 10 ricerche restano salvate su questo dispositivo.</p>
+      <div id="history-list" class="history-list"></div>
+      <div class="shopping-actions"><button id="history-clear" class="favorite-remove" type="button">Cancella cronologia</button></div>
+    </section>
+    <section id="shopping-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LA TUA SPESA</div><h2>Lista della spesa</h2></div><button id="shopping-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <p class="shopping-hint">Spunta gli ingredienti man mano che li acquisti.</p>
+      <div id="shopping-list" class="shopping-list"></div>
+      <div class="shopping-actions"><button id="shopping-clear" class="favorite-remove" type="button">Svuota lista</button></div>
+    </section>
+    <section id="welcome" class="welcome">
+      <div class="welcome-icon">✳</div>
+      <h2>La tua prossima ricetta<br>è a portata di ricerca.</h2>
+      <p>Cerchiamo tra siti di cucina selezionati. Apri una ricetta per vedere ingredienti, tempi e procedimento.</p>
+    </section>
+  </main>
+  <div id="recipe-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <article class="recipe-panel" role="dialog" aria-modal="true" aria-labelledby="recipe-title">
+      <button class="close-button" data-close aria-label="Chiudi">×</button>
+      <div id="recipe-content"></div>
+    </article>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer><span>Cosa Cucino?</span><span>Le ricette restano di proprietà dei rispettivi editori. Visita la fonte originale.</span></footer>
+  <script src="/app.js?v=35" defer></script>
+</body>
+</html>
