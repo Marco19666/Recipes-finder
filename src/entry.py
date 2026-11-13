@@ -579,8 +579,11 @@ async def salvasoldi(request: Request):
         "Il prezzo di ogni ingrediente deve essere il costo stimato della quantità necessaria per tutte le persone, "
         "non il prezzo al kg o della confezione intera. Includi quantità totali e unità comprensibili. "
         "Non omettere ingredienti essenziali. Per quanto possibile usa ingredienti stagionali e prodotti comuni. "
-        "Se crei un menu, rispetta davvero il budget totale richiesto; scegli piatti economici e segnala alternative "
-        "più convenienti. Se stimi una spesa, includi tutti gli ingredienti dei piatti descritti. "
+        "Se crei un menu, considera il budget come un limite invalicabile: punta a spendere al massimo il 90% "
+        "del budget per persona, così da lasciare un margine, e scegli piatti economici. Rispetta esattamente "
+        "la tipologia richiesta: vegetariano senza carne e pesce, vegano senza alcun prodotto animale, "
+        "solo pesce per la tipologia pesce, solo carne per la tipologia carne. Includi tutte e sole le portate richieste. "
+        "Se stimi una spesa, includi tutti gli ingredienti dei piatti descritti. "
         "Non inventare prezzi esatti di un negozio: sono stime indicative. Mantieni le alternative concise."
     )
     env = request.scope["env"]
@@ -643,26 +646,36 @@ async def salvasoldi(request: Request):
         dishes = data.get("dishes") if isinstance(data.get("dishes"), list) else []
         ingredients = data.get("ingredients") if isinstance(data.get("ingredients"), list) else []
         alternatives = data.get("alternatives") if isinstance(data.get("alternatives"), list) else []
+        import math
+        if not ingredients or len(ingredients) > 80:
+            raise RuntimeError("La risposta non contiene una lista ingredienti completa.")
+        if mode == "create_menu" and not dishes:
+            raise RuntimeError("La risposta non contiene le portate del menu.")
         clean_ingredients = []
         total = 0.0
-        for item in ingredients[:80]:
+        for item in ingredients:
             if not isinstance(item, dict):
-                continue
+                raise RuntimeError("Un ingrediente non ha un formato valido.")
             name = str(item.get("name") or item.get("ingredient") or "").strip()[:120]
-            if not name:
-                continue
+            quantity = str(item.get("quantity") or "").strip()[:80]
+            if not name or not quantity:
+                raise RuntimeError("Manca il nome o la quantità di un ingrediente.")
             try:
-                price = max(0.0, min(10000.0, float(item.get("price", item.get("cost", 0)))))
+                price = float(item.get("price", item.get("cost")))
             except (TypeError, ValueError):
-                price = 0.0
+                raise RuntimeError("Manca il prezzo stimato di un ingrediente.")
+            if not math.isfinite(price) or price < 0 or price > 10000:
+                raise RuntimeError("Un prezzo stimato non è valido.")
             price = round(price, 2)
             total += price
             clean_ingredients.append({
                 "name": name,
-                "quantity": str(item.get("quantity") or "")[:80],
+                "quantity": quantity,
                 "unit": str(item.get("unit") or "")[:40],
                 "price": price,
             })
+        if not math.isfinite(total) or total <= 0:
+            raise RuntimeError("Il costo totale stimato non è valido.")
         total = round(total, 2)
         per_person = round(total / people, 2)
         summary = str(data.get("summary") or "").strip()[:700]
