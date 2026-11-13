@@ -34,6 +34,15 @@
     }
     return id;
   }
+  const deviceKey="cosa-cucino-salvasoldi-device-v1";
+  function deviceId(){
+    let id=localStorage.getItem(deviceKey);
+    if(!id){
+      id=crypto.randomUUID?crypto.randomUUID():"salvasoldi-"+Date.now()+"-"+Math.random().toString(36).slice(2);
+      localStorage.setItem(deviceKey,id);
+    }
+    return id;
+  }
   const euro = value => new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"}).format(Number(value)||0);
   const safe = value => String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
   function setStatus(message,error=false){status.textContent=message;status.hidden=false;status.classList.toggle("is-error",error);}
