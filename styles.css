@@ -581,3 +581,49 @@ body[data-theme="dark"] .splash-content p{color:var(--text-secondary)}
 
 /* Nasconde Prova oggi anche in presenza di regole display del layout. */
 .try-recipes-section[hidden] { display: none !important; }
+
+/* SalvaSoldi */
+.salvasoldi-launch{background:var(--green)!important;color:#fff!important;border-color:var(--green)!important;font-weight:700}
+.salvasoldi-section{max-width:920px}
+.salvasoldi-tabs{display:flex;gap:10px;margin:24px 0 18px;border-bottom:1px solid var(--line)}
+.salvasoldi-tab{border:0;border-bottom:3px solid transparent;background:transparent;color:var(--muted);padding:13px 18px;font:700 14px "DM Sans";cursor:pointer}
+.salvasoldi-tab.is-active{color:var(--green);border-bottom-color:var(--green)}
+.salvasoldi-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 5px 18px rgba(42,48,37,.045)}
+.salvasoldi-form{display:grid;gap:18px}
+.salvasoldi-form label{display:grid;gap:7px;color:var(--ink);font-size:13px;font-weight:700}
+.salvasoldi-form input,.salvasoldi-form select,.salvasoldi-form textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--paper);padding:12px 13px;color:var(--ink);font:14px "DM Sans"}
+.salvasoldi-form textarea{resize:vertical;line-height:1.55}
+.salvasoldi-form input:focus,.salvasoldi-form select:focus,.salvasoldi-form textarea:focus{outline:2px solid #b7c8b3;border-color:var(--green)}
+.salvasoldi-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.salvasoldi-fieldset{margin:0;padding:14px;border:1px solid var(--line);border-radius:10px}
+.salvasoldi-fieldset legend{padding:0 6px;color:var(--green);font-size:12px;font-weight:700}
+.salvasoldi-checks{display:flex;gap:12px 20px;flex-wrap:wrap}
+.salvasoldi-checks label{display:flex;align-items:center;gap:7px;font-weight:500}
+.salvasoldi-checks input{width:17px;height:17px;accent-color:var(--green)}
+.salvasoldi-submit{justify-self:start;padding:13px 19px;font-size:14px}
+.salvasoldi-submit:disabled{opacity:.6;cursor:wait}
+.salvasoldi-status{margin:18px 0;padding:13px 15px;border-radius:9px;background:#edf1e9;color:var(--green-dark);font-size:13px}
+.salvasoldi-status.is-error{background:#f8eae5;color:#8c3f2c}
+.salvasoldi-results{display:grid;gap:16px;margin-top:20px}
+.salvasoldi-result-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.salvasoldi-result-card h3{margin:0 0 8px;font:600 22px "Playfair Display",serif}
+.salvasoldi-result-card h4{margin:18px 0 8px;color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.salvasoldi-result-card p,.salvasoldi-result-card li{font-size:13px;line-height:1.6;color:var(--muted)}
+.salvasoldi-cost-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.salvasoldi-cost-summary>div{padding:13px;background:var(--paper);border-radius:9px}
+.salvasoldi-cost-summary span{display:block;color:var(--muted);font-size:11px}
+.salvasoldi-cost-summary strong{display:block;margin-top:4px;color:var(--green-dark);font-size:19px}
+.salvasoldi-ingredient-list{list-style:none;padding:0;margin:0}
+.salvasoldi-ingredient-list li{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px solid var(--line)}
+.salvasoldi-alternatives{padding:12px 14px;background:#f4f1e8;border-radius:9px}
+.salvasoldi-disclaimer{margin:16px 0;color:var(--muted);font-size:11px;line-height:1.5}
+body[data-theme="dark"] .salvasoldi-status{background:#293b2d;color:#d6e5d2}
+body[data-theme="dark"] .salvasoldi-status.is-error{background:#452c27;color:#f0c7b9}
+body[data-theme="dark"] .salvasoldi-alternatives{background:#333329}
+@media(max-width:520px){.salvasoldi-panel{padding:16px}.salvasoldi-form-grid,.salvasoldi-cost-summary{grid-template-columns:1fr}.salvasoldi-checks{display:grid;grid-template-columns:1fr 1fr}.salvasoldi-tab{flex:1;padding:12px 6px;font-size:12px}}
+
+.salvasoldi-budget-result{padding:11px 13px;border-radius:9px;font-size:13px;font-weight:700}
+.salvasoldi-budget-result.is-within{background:#e8f2e5;color:#315f37}
+.salvasoldi-budget-result.is-over{background:#fff0df;color:#89551c}
+body[data-theme="dark"] .salvasoldi-budget-result.is-within{background:#293b2d;color:#d6e5d2}
+body[data-theme="dark"] .salvasoldi-budget-result.is-over{background:#493724;color:#f4d2a4}

@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css?v=28">
+  <link rel="stylesheet" href="/styles.css?v=30">
 </head>
 <body>
   <div id="app-splash" class="app-splash" role="status" aria-live="polite" aria-label="Caricamento di Cosa Cucino?">
@@ -48,7 +48,7 @@
           <label class="site-option"><input type="checkbox" name="search-site" value="tavolartegusto.it" checked> Tavolartegusto</label>
         </div>
       </div>
-      <div class="home-actions"><button id="show-favorites" class="favorites-home-button" type="button">♡ Ricette preferite <span id="favorites-count">0</span></button><button id="show-personal" class="favorites-home-button" type="button">＋ Le mie ricette <span id="personal-count">0</span></button><button id="show-shopping" class="favorites-home-button" type="button">🛒 Lista della spesa <span id="shopping-count">0</span></button><button id="show-history" class="favorites-home-button" type="button">⌕ Ultime ricerche</button></div>
+      <div class="home-actions"><button id="show-salvasoldi" class="favorites-home-button salvasoldi-launch" type="button">€ SalvaSoldi</button><button id="show-favorites" class="favorites-home-button" type="button">♡ Ricette preferite <span id="favorites-count">0</span></button><button id="show-personal" class="favorites-home-button" type="button">＋ Le mie ricette <span id="personal-count">0</span></button><button id="show-shopping" class="favorites-home-button" type="button">🛒 Lista della spesa <span id="shopping-count">0</span></button><button id="show-history" class="favorites-home-button" type="button">⌕ Ultime ricerche</button></div>
       <section class="try-recipes-section" aria-labelledby="try-recipes-title"><div class="section-heading"><div><div class="eyebrow">CINQUE IDEE NUOVE OGNI GIORNO</div><h2 id="try-recipes-title">Prova oggi</h2></div><span id="try-recipes-count" class="result-count">5 ricette da scoprire</span></div><div id="try-recipes" class="results-grid"><div class="empty-state">Sto preparando le idee di oggi...</div></div></section>
       <div class="source-line"><span class="source-dot"></span> Fonti selezionate: Misya, Cookist, Cucchiaio d'Argento e altri</div>
     </section>
@@ -89,6 +89,45 @@
       <div id="shopping-list" class="shopping-list"></div>
       <div class="shopping-actions"><button id="shopping-clear" class="favorite-remove" type="button">Svuota lista</button></div>
     </section>
+
+    <section id="salvasoldi-section" class="results-section salvasoldi-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">CUCINA BENE, SPENDI MEGLIO</div><h2>€ SalvaSoldi</h2></div><button id="salvasoldi-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <p class="shopping-hint">Pianifica un menu in base al budget oppure calcola quanto ti costerà quello che hai già scelto.</p>
+      <div class="salvasoldi-tabs" role="tablist" aria-label="Strumenti SalvaSoldi">
+        <button class="salvasoldi-tab is-active" id="budget-tab" type="button" role="tab" aria-selected="true" aria-controls="budget-panel">🍽️ Crea menu</button>
+        <button class="salvasoldi-tab" id="cost-tab" type="button" role="tab" aria-selected="false" aria-controls="cost-panel">🧮 QuantoSpendo</button>
+      </div>
+      <div id="budget-panel" class="salvasoldi-panel" role="tabpanel" aria-labelledby="budget-tab">
+        <form id="budget-form" class="salvasoldi-form">
+          <div class="salvasoldi-form-grid">
+            <label>Budget massimo a persona (€)<input id="budget-per-person" type="number" min="1" max="500" step="0.50" value="15" required></label>
+            <label>Numero di persone<input id="budget-people" type="number" min="1" max="30" value="4" required></label>
+          </div>
+          <fieldset class="salvasoldi-fieldset"><legend>Portate desiderate</legend>
+            <div class="salvasoldi-checks">
+              <label><input type="checkbox" name="course" value="Antipasto"> Antipasto</label>
+              <label><input type="checkbox" name="course" value="Primo" checked> Primo</label>
+              <label><input type="checkbox" name="course" value="Secondo" checked> Secondo</label>
+              <label><input type="checkbox" name="course" value="Contorno" checked> Contorno</label>
+              <label><input type="checkbox" name="course" value="Dolce"> Dolce</label>
+            </div>
+          </fieldset>
+          <label>Tipologia di menu<select id="budget-diet"><option value="onnivoro">Carne e pesce</option><option value="carne">Carne</option><option value="pesce">Pesce</option><option value="vegetariano">Vegetariano</option><option value="vegano">Vegano</option></select></label>
+          <label>Preferenze o ingredienti da evitare <input id="budget-notes" type="text" maxlength="300" placeholder="Es. senza funghi, prodotti di stagione..."></label>
+          <button class="recipe-button salvasoldi-submit" type="submit">Crea il mio menu <span>↗</span></button>
+        </form>
+      </div>
+      <div id="cost-panel" class="salvasoldi-panel" role="tabpanel" aria-labelledby="cost-tab" hidden>
+        <form id="cost-form" class="salvasoldi-form">
+          <label>Quali piatti vuoi preparare?<textarea id="cost-menu" rows="5" minlength="3" maxlength="2000" placeholder="Es. Pasta alla carbonara, pollo al forno con patate, tiramisù..." required></textarea></label>
+          <label>Numero di persone<input id="cost-people" type="number" min="1" max="30" value="4" required></label>
+          <button class="recipe-button salvasoldi-submit" type="submit">Calcola la spesa <span>↗</span></button>
+        </form>
+      </div>
+      <div id="salvasoldi-status" class="salvasoldi-status" role="status" aria-live="polite" hidden></div>
+      <div id="salvasoldi-results" class="salvasoldi-results" aria-live="polite"></div>
+      <p class="salvasoldi-disclaimer">I prezzi sono stime indicative e possono variare in base a negozio, marca, zona e stagione. Verifica sempre i prezzi al momento della spesa.</p>
+    </section>
     <section id="welcome" class="welcome">
       <div class="welcome-icon">✳</div>
       <h2>La tua prossima ricetta<br>è a portata di ricerca.</h2>
@@ -105,5 +144,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <footer><span>Cosa Cucino?</span><span>Le ricette restano di proprietà dei rispettivi editori. Visita la fonte originale.</span></footer>
   <script src="/app.js?v=35" defer></script>
+  <script src="/salvasoldi.js?v=2" defer></script>
 </body>
 </html>
