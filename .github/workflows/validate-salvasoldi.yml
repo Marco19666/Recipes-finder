@@ -17,6 +17,9 @@ on:
       - "src/entry.py"
       - "public/salvasoldi.js"
       - "public/app.js"
+      - "public/index.html"
+      - "public/sw.js"
+      - "tests/salvasoldi-contract.mjs"
       - ".github/workflows/validate-salvasoldi.yml"
 
 jobs:
