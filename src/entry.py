@@ -654,13 +654,40 @@ async def salvasoldi(request: Request):
         if not isinstance(data, dict):
             raise RuntimeError("La risposta di SalvaSoldi non è valida.")
 
-        dishes = data.get("dishes") if isinstance(data.get("dishes"), list) else []
+        raw_dishes = data.get("dishes") if isinstance(data.get("dishes"), list) else []
         ingredients = data.get("ingredients") if isinstance(data.get("ingredients"), list) else []
         alternatives = data.get("alternatives") if isinstance(data.get("alternatives"), list) else []
+        clean_dishes = []
+        if mode == "create_menu":
+            # Non mostrare come completo un menu che omette o inventa portate.
+            course_names = {
+                "antipasto": "Antipasto", "primo": "Primo",
+                "secondo": "Secondo", "contorno": "Contorno", "dolce": "Dolce",
+            }
+            returned_courses = set()
+            if not raw_dishes or len(raw_dishes) > 12:
+                raise RuntimeError("La risposta non contiene le portate del menu.")
+            for dish in raw_dishes:
+                if not isinstance(dish, dict):
+                    raise RuntimeError("Una portata del menu non ha un formato valido.")
+                course = course_names.get(str(dish.get("course") or dish.get("portata") or "").strip().casefold())
+                name = str(dish.get("name") or dish.get("nome") or "").strip()[:140]
+                if not course or not name:
+                    raise RuntimeError("Una portata del menu è priva di categoria o nome.")
+                if course not in courses:
+                    raise RuntimeError("Il menu contiene una portata non richiesta.")
+                if course in returned_courses:
+                    raise RuntimeError("Il menu contiene una portata duplicata.")
+                returned_courses.add(course)
+                clean_dishes.append({
+                    "course": course,
+                    "name": name,
+                    "description": str(dish.get("description") or dish.get("descrizione") or "").strip()[:500],
+                })
+            if returned_courses != set(courses):
+                raise RuntimeError("Il menu non contiene tutte le portate richieste.")
         if not ingredients or len(ingredients) > 80:
             raise RuntimeError("La risposta non contiene una lista ingredienti completa.")
-        if mode == "create_menu" and not dishes:
-            raise RuntimeError("La risposta non contiene le portate del menu.")
         clean_ingredients = []
         total = 0.0
         for item in ingredients:
@@ -695,7 +722,7 @@ async def salvasoldi(request: Request):
         return {
             "title": str(data.get("title") or ("Menu SalvaSoldi" if mode == "create_menu" else "Stima della spesa"))[:120],
             "summary": summary,
-            "dishes": dishes[:12],
+            "dishes": clean_dishes,
             "ingredients": clean_ingredients,
             "total_cost": total,
             "cost_per_person": per_person,
