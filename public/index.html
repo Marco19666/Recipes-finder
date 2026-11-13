@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3f6245">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon.svg">
+  <meta name="description" content="Cosa Cucino? Trova ogni giorno idee e ricette dai tuoi siti di cucina preferiti.">
+  <title>Cosa Cucino? — trova la tua prossima ricetta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=54">
+</head>
+<body>
+  <div id="app-splash" class="app-splash" role="status" aria-live="polite" aria-label="Caricamento di Cosa Cucino?">
+    <div class="splash-content"><span class="splash-mark" aria-hidden="true">C</span><div class="splash-name">Cosa Cucino<span>?</span></div><p>Scopri ogni giorno il menu che abbiamo preparato per te</p><span class="splash-loader" aria-hidden="true"><i></i><i></i><i></i></span></div>
+  </div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Cosa Cucino? home"><span class="brand-mark">C</span><span>Cosa Cucino<span class="brand-dot">?</span></span></a>
+    <div class="top-actions"><span class="top-note">Ispirazione, ogni giorno</span><button id="theme-toggle" class="utility-toggle" type="button" aria-pressed="false">☾ Tema scuro</button><button id="wake-toggle" class="utility-toggle" type="button" aria-pressed="false">♧ Schermo sempre acceso</button><button id="install-app" class="install-app-button" type="button">＋ Installa app</button></div>
+  </header>
+  <main>
+    <section id="daily-recipe-section" class="results-section daily-recipe-section">
+      <div class="section-heading"><div><div class="eyebrow">L’ISPIRAZIONE DI OGGI</div><h2>Ricetta del giorno</h2></div><span class="result-count">Una nuova idea ogni giorno</span></div>
+      <div id="daily-recipe" class="results-grid"><div class="empty-state">Sto scegliendo la ricetta di oggi...</div></div>
+    </section>
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> IL PROSSIMO PIATTO PARTE DA QUI</div>
+      <h1>Che delizia<br><em>prepariamo oggi?</em></h1>
+      <p class="hero-copy">Lasciati ispirare, trova qualcosa di buono da portare in tavola!</p>
+      <form id="search-form" class="search-form">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="query" type="search" placeholder="Es. pasta al pesto, torta di mele..." autocomplete="off" minlength="2" required>
+        <button type="submit">Cerca ricette <span aria-hidden="true">↗</span></button>
+      </form>
+      <div class="site-chooser" role="group" aria-label="Siti su cui cercare le ricette">
+        <div class="site-chooser-title">Cerca su questi siti</div>
+        <label class="site-option site-all"><input id="sites-all" type="checkbox" checked> Tutti i siti</label>
+        <div class="site-options">
+          <label class="site-option"><input type="checkbox" name="search-site" value="misya.info" checked> Misya</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="cookist.it" checked> Cookist</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="cucchiaio.it" checked> Cucchiaio d'Argento</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="fattoincasadabenedetta.it" checked> Fatto in casa da Benedetta</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="ricettedellanonna.net" checked> Ricette della Nonna</label>
+          <label class="site-option"><input type="checkbox" name="search-site" value="tavolartegusto.it" checked> Tavolartegusto</label>
+        </div>
+      </div>
+      <div class="home-actions"><button id="show-archimede" class="archimede-home-button" type="button"><span class="archimede-home-icon" aria-hidden="true"><img src="/images/archimede.svg" alt=""></span><span><strong>Archimede</strong><small>Cosa cucino con quello che ho?</small></span><span class="chef-home-arrow" aria-hidden="true">↗</span></button><button id="show-chef" class="chef-home-button" type="button"><span class="chef-home-icon" aria-hidden="true">👨‍🍳</span><span class="chef-home-copy"><strong>Chiedi allo chef</strong><small>Un aiuto in più per le tue idee in cucina</small></span><span class="chef-home-arrow" aria-hidden="true">↗</span></button><button id="show-salvasoldi" class="favorites-home-button salvasoldi-launch" type="button">€ SalvaSoldi</button><button id="show-favorites" class="favorites-home-button" type="button">♡ Ricette preferite <span id="favorites-count">0</span></button><button id="show-personal" class="favorites-home-button" type="button">＋ Le mie ricette <span id="personal-count">0</span></button><button id="show-shopping" class="favorites-home-button" type="button">🛒 Lista della spesa <span id="shopping-count">0</span></button><button id="show-history" class="favorites-home-button" type="button">⌕ Ultime ricerche</button></div>
+      <section class="try-recipes-section" aria-labelledby="try-recipes-title"><div class="section-heading"><div><div class="eyebrow">CINQUE IDEE NUOVE OGNI GIORNO</div><h2 id="try-recipes-title">Prova oggi</h2></div><span id="try-recipes-count" class="result-count">5 ricette da scoprire</span></div><div id="try-recipes" class="results-grid"><div class="empty-state">Sto preparando le idee di oggi...</div></div></section>
+      <div class="source-line"><span class="source-dot"></span> Fonti selezionate: Misya, Cookist, Cucchiaio d'Argento e altri</div>
+    </section>
+    <section id="results-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LA SELEZIONE PER TE</div><h2 id="results-title">Risultati</h2></div><span id="result-count" class="result-count"></span></div>
+      <div id="search-progress" class="search-progress" role="status" aria-live="polite" hidden><div class="search-progress-top"><span class="search-spinner" aria-hidden="true"></span><div class="search-progress-copy"><strong id="search-progress-title">Avvio ricerca...</strong><p id="search-progress-detail"></p></div></div><div class="progress-track"><div id="search-progress-bar"></div></div></div>
+      <div id="results" class="results-grid"></div>
+    </section>
+    <section id="favorites-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LA TUA RACCOLTA</div><h2>Ricette preferite</h2></div><button id="back-home" class="back-home-button" type="button">Torna alla home</button></div>
+      <div class="personal-tools"><input id="favorites-search" type="search" placeholder="Cerca nelle ricette preferite..."><select id="favorites-category-filter" aria-label="Filtra per categoria"><option value="">Tutte le categorie</option><option>Primo</option><option>Secondo</option><option>Contorno</option><option>Antipasto</option><option>Dolce</option><option>Altro</option></select></div><div id="favorites-grid" class="results-grid"></div>
+    </section>
+    <section id="personal-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">IL TUO RICETTARIO</div><h2>Le mie ricette</h2></div><button id="personal-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <div class="personal-tools"><input id="personal-search" type="search" placeholder="Cerca nelle mie ricette..."><select id="personal-category-filter" aria-label="Filtra per categoria"><option value="">Tutte le categorie</option><option>Primo</option><option>Secondo</option><option>Contorno</option><option>Antipasto</option><option>Dolce</option><option>Altro</option></select></div><div id="personal-grid" class="results-grid"></div>
+      <div class="personal-add-area"><button id="personal-add" class="recipe-button" type="button">＋ Aggiungi ricetta</button></div>
+      <form id="personal-form" class="personal-form" hidden>
+        <h3>Aggiungi una ricetta personale</h3>
+        <label for="personal-title">Nome della ricetta</label><input id="personal-title" required maxlength="100" placeholder="Es. Lasagne della nonna">
+        <label for="personal-category">Categoria</label><select id="personal-category"><option>Primo</option><option>Secondo</option><option>Contorno</option><option>Antipasto</option><option>Dolce</option><option selected>Altro</option></select>
+        <label for="personal-ingredients">Ingredienti</label><textarea id="personal-ingredients" required rows="4" placeholder="Scrivi gli ingredienti, uno per riga"></textarea>
+        <label for="personal-steps">Preparazione</label><textarea id="personal-steps" required rows="5" placeholder="Descrivi i passaggi, uno per riga"></textarea>
+        <label for="personal-photo">Foto della ricetta (facoltativa)</label><input id="personal-photo" type="file" accept="image/*">
+        <label for="personal-time">Tempo di preparazione (minuti, facoltativo)</label><input id="personal-time" type="number" min="1" max="1440" placeholder="Es. 45">
+        <button type="submit" class="recipe-button">Salva ricetta personale</button>
+      </form>
+
+    </section>
+    <section id="history-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LE TUE RICERCHE</div><h2>Ultime ricerche</h2></div><button id="history-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <p class="shopping-hint">Le ultime 10 ricerche restano salvate su questo dispositivo.</p>
+      <div id="history-list" class="history-list"></div>
+      <div class="shopping-actions"><button id="history-clear" class="favorite-remove" type="button">Cancella cronologia</button></div>
+    </section>
+    <section id="shopping-section" class="results-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">LA TUA SPESA</div><h2>Lista della spesa</h2></div><button id="shopping-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <p class="shopping-hint">Spunta gli ingredienti man mano che li acquisti.</p>
+      <div id="shopping-list" class="shopping-list"></div>
+      <div class="shopping-actions"><button id="shopping-clear" class="favorite-remove" type="button">Svuota lista</button></div>
+    </section>
+    <section id="archimede-section" class="results-section archimede-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">IL TUO ASSISTENTE DI CUCINA</div><h2>Archimede</h2></div><button id="archimede-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <div class="archimede-card">
+        <div class="archimede-intro">
+          <div class="archimede-avatar"><img src="/images/archimede.svg" alt="Archimede, il gufo chef di Recipe Finder"></div>
+          <div><span class="chef-kicker">CIAO, SONO ARCHIMEDE</span><h3>Dimmi cosa hai in cucina</h3><p>Prima scegli gli ingredienti, poi il tipo di piatto. Ti proporrò una ricetta usando ciò che hai davvero a disposizione.</p><span id="archimede-quota" class="archimede-quota">2 consigli disponibili oggi</span></div>
+        </div>
+        <form id="archimede-form" class="archimede-form">
+          <label for="archimede-ingredients">1. Quali ingredienti hai in casa?</label>
+          <textarea id="archimede-ingredients" rows="3" maxlength="1200" placeholder="Es. zucchine, spaghetti, bacon, pomodoro..." required></textarea>
+          <span class="archimede-help">Separali con una virgola oppure scrivili uno per riga.</span>
+          <fieldset class="archimede-categories"><legend>2. Cosa vuoi cucinare?</legend>
+            <label><input type="radio" name="archimede-category" value="Antipasto"><span>🥗 Antipasto</span></label>
+            <label><input type="radio" name="archimede-category" value="Primo" checked><span>🍝 Primo</span></label>
+            <label><input type="radio" name="archimede-category" value="Secondo"><span>🍗 Secondo</span></label>
+            <label><input type="radio" name="archimede-category" value="Contorno"><span>🥦 Contorno</span></label>
+            <label><input type="radio" name="archimede-category" value="Dolce"><span>🍰 Dolce</span></label>
+          </fieldset>
+          <button id="archimede-submit" class="recipe-button" type="submit">Chiedi ad Archimede ✨</button>
+        </form>
+        <div id="archimede-result" class="archimede-result" aria-live="polite" hidden></div>
+      </div>
+    </section>
+    <section id="chef-section" class="results-section chef-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">IL TUO AIUTO IN CUCINA</div><h2>Chiedi allo chef</h2></div><button id="chef-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <div class="chef-card">
+        <div class="chef-intro"><div class="chef-avatar" aria-hidden="true"><svg viewBox="0 0 120 120"><path d="M26 48c-13-19 8-34 21-23 4-23 39-23 44 0 17-10 33 12 18 26l-4 12H31z" fill="#fff" stroke="#d9dfd4" stroke-width="3"/><path d="M31 55h61v16c0 23-14 38-31 38S30 94 30 71z" fill="#f1c6a4"/><path d="M39 74q8 8 16 0m10 0q8 8 16 0" fill="none" stroke="#49352b" stroke-width="3" stroke-linecap="round"/><path d="M48 91q12 12 25 0" fill="none" stroke="#9d5143" stroke-width="4" stroke-linecap="round"/><path d="M25 119q3-28 35-28t36 28" fill="#fff" stroke="#d9dfd4" stroke-width="3"/></svg></div><div><span class="chef-kicker">CIAO, SONO IL TUO CHEF</span><h3>Mettiamoci ai fornelli!</h3><p>Chiedimi idee, tecniche, sostituzioni e consigli per le tue ricette. Rispondo solo su argomenti di cucina.</p><div class="chef-quota" id="chef-quota" aria-live="polite">3 domande disponibili oggi</div></div></div>
+        <div id="chef-messages" class="chef-messages" role="log" aria-live="polite"><div class="chef-message chef-message--assistant">Ciao! 👋 Cosa prepariamo oggi? Posso aiutarti con ingredienti, cotture, ricette e piccoli trucchi in cucina.</div></div>
+        <form id="chef-form" class="chef-form"><label class="sr-only" for="chef-question">La tua domanda di cucina</label><textarea id="chef-question" rows="2" maxlength="700" placeholder="Es. Come faccio una besciamella senza grumi?" required></textarea><button id="chef-send" type="submit">Invia ↗</button></form>
+      </div>
+    </section>
+    <section id="salvasoldi-section" class="results-section salvasoldi-section" hidden>
+      <div class="section-heading"><div><div class="eyebrow">CUCINA BENE, SPENDI MEGLIO</div><h2>€ SalvaSoldi</h2></div><button id="salvasoldi-back" class="back-home-button" type="button">Torna alla home</button></div>
+      <p class="shopping-hint">Pianifica un menu in base al budget oppure calcola quanto ti costerà quello che hai già scelto.</p>
+      <div class="salvasoldi-tabs" role="tablist" aria-label="Strumenti SalvaSoldi">
+        <button class="salvasoldi-tab is-active" id="budget-tab" type="button" role="tab" aria-selected="true" aria-controls="budget-panel">🍽️ Crea menu</button>
+        <button class="salvasoldi-tab" id="cost-tab" type="button" role="tab" aria-selected="false" aria-controls="cost-panel">🧮 QuantoSpendo</button>
+      </div>
+      <div id="budget-panel" class="salvasoldi-panel" role="tabpanel" aria-labelledby="budget-tab">
+        <form id="budget-form" class="salvasoldi-form">
+          <div class="salvasoldi-form-grid">
+            <label>Budget massimo a persona (€)<input id="budget-per-person" type="number" min="1" max="500" step="0.50" value="15" required></label>
+            <label>Numero di persone<input id="budget-people" type="number" min="1" max="100" value="4" required></label>
+          </div>
+          <fieldset class="salvasoldi-fieldset"><legend>Portate desiderate</legend>
+            <div class="salvasoldi-checks">
+              <label><input type="checkbox" name="course" value="Antipasto"> Antipasto</label>
+              <label><input type="checkbox" name="course" value="Primo" checked> Primo</label>
+              <label><input type="checkbox" name="course" value="Secondo" checked> Secondo</label>
+              <label><input type="checkbox" name="course" value="Contorno" checked> Contorno</label>
+              <label><input type="checkbox" name="course" value="Dolce"> Dolce</label>
+            </div>
+          </fieldset>
+          <label>Tipologia di menu<select id="budget-diet"><option value="onnivoro">Carne e pesce</option><option value="carne">Carne</option><option value="pesce">Pesce</option><option value="vegetariano">Vegetariano</option><option value="vegano">Vegano</option></select></label>
+          <label>Preferenze o ingredienti da evitare <input id="budget-notes" type="text" maxlength="300" placeholder="Es. senza funghi, prodotti di stagione..."></label>
+          <button class="recipe-button salvasoldi-submit" type="submit">Crea il mio menu <span>↗</span></button>
+        </form>
+      </div>
+      <div id="cost-panel" class="salvasoldi-panel" role="tabpanel" aria-labelledby="cost-tab" hidden>
+        <form id="cost-form" class="salvasoldi-form">
+          <label>Quali piatti vuoi preparare?<textarea id="cost-menu" rows="5" minlength="3" maxlength="2000" placeholder="Es. Pasta alla carbonara, pollo al forno con patate, tiramisù..." required></textarea></label>
+          <label>Numero di persone<input id="cost-people" type="number" min="1" max="100" value="4" required></label>
+          <button class="recipe-button salvasoldi-submit" type="submit">Calcola la spesa <span>↗</span></button>
+        </form>
+      </div>
+      <div id="salvasoldi-status" class="salvasoldi-status" role="status" aria-live="polite" hidden></div>
+      <div id="salvasoldi-results" class="salvasoldi-results" aria-live="polite"></div>
+      <p class="salvasoldi-disclaimer">I prezzi sono stime indicative e possono variare in base a negozio, marca, zona e stagione. Verifica sempre i prezzi al momento della spesa.</p>
+    </section>
+    <section id="welcome" class="welcome">
+      <div class="welcome-icon">✳</div>
+      <h2>La tua prossima ricetta<br>è a portata di ricerca.</h2>
+      <p>Cerchiamo tra siti di cucina selezionati. Apri una ricetta per vedere ingredienti, tempi e procedimento.</p>
+    </section>
+  </main>
+  <div id="recipe-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <article class="recipe-panel" role="dialog" aria-modal="true" aria-labelledby="recipe-title">
+      <button class="close-button" data-close aria-label="Chiudi">×</button>
+      <div id="recipe-content"></div>
+    </article>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer><span>Cosa Cucino?</span><span>Le ricette restano di proprietà dei rispettivi editori. Visita la fonte originale.</span></footer>
+  <script src="/app.js?v=46" defer></script>
+  <script src="/salvasoldi.js?v=1" defer></script>
+</body>
+</html>
