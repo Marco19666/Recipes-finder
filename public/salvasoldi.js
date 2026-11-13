@@ -12,10 +12,11 @@
     const tryRecipes=document.querySelector(".try-recipes-section"); if(tryRecipes) tryRecipes.hidden=true;
     const daily=ids("daily-recipe-section"); if(daily) daily.hidden=true;
     if(home) home.hidden=true;
+    const hero=document.querySelector(".hero"); if(hero) hero.hidden=true;
   };
   const show = () => { hideOtherSections(); section.hidden=false; window.scrollTo({top:0,behavior:"smooth"}); };
   launch?.addEventListener("click",show);
-  ids("salvasoldi-back")?.addEventListener("click",() => { section.hidden=true; if(home) home.hidden=false; const daily=ids("daily-recipe-section"); if(daily) daily.hidden=false; const tries=document.querySelector(".try-recipes-section"); if(tries) tries.hidden=false; });
+  ids("salvasoldi-back")?.addEventListener("click",() => { section.hidden=true; if(home) home.hidden=false; const hero=document.querySelector(".hero"); if(hero) hero.hidden=false; const daily=ids("daily-recipe-section"); if(daily) daily.hidden=false; const tries=document.querySelector(".try-recipes-section"); if(tries) tries.hidden=false; });
   function setTab(which) {
     const budget=which==="budget";
     ids("budget-panel").hidden=!budget; ids("cost-panel").hidden=budget;
