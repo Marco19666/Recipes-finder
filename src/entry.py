@@ -537,6 +537,7 @@ async def salvasoldi(request: Request):
     mode = str(payload.get("mode") or "").strip()
     if mode not in {"create_menu", "calculate_cost"}:
         raise HTTPException(status_code=400, detail="Modalità SalvaSoldi non valida.")
+    import math
     people_raw = payload.get("people")
     if isinstance(people_raw, bool):
         raise HTTPException(status_code=400, detail="Indica un numero di persone valido.")
