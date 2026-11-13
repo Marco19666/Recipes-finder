@@ -46,6 +46,12 @@
     const total=Number(data.total_cost??data.total??0), perPerson=Number(data.cost_per_person??data.per_person??0);
     let html='<article class="salvasoldi-result-card"><h3>'+safe(data.title||(mode==="budget"?"Il tuo menu":"Stima della spesa"))+'</h3>';
     if(data.summary) html+='<p>'+safe(data.summary)+'</p>';
+    if(mode==="budget" && typeof data.within_budget==="boolean"){
+      const budgetMessage=data.within_budget
+        ?"✓ Il menu rientra nel budget di "+euro(data.budget_per_person)+" a persona."
+        :"Attenzione: la stima supera il budget di "+euro(data.budget_per_person)+" a persona.";
+      html+='<p class="salvasoldi-budget-result '+(data.within_budget?"is-within":"is-over")+'">'+safe(budgetMessage)+'</p>';
+    }
     if(dishes.length) html+='<h4>Menu proposto</h4>'+dishes.map(d=>'<div><strong>'+safe(d.course||d.portata||"Piatto")+': '+safe(d.name||d.nome||"")+'</strong><p>'+safe(d.description||d.descrizione||"")+'</p></div>').join("");
     if(ingredients.length) html+='<h4>Lista degli ingredienti</h4><ul class="salvasoldi-ingredient-list">'+ingredients.map(i=>'<li><span>'+safe(i.name||i.ingredient||i.ingrediente||"Ingrediente")+' · '+safe([i.quantity,i.unit].filter(Boolean).join(" "))+'</span><strong>'+euro(i.price??i.cost)+'</strong></li>').join("")+'</ul>';
     html+='<div class="salvasoldi-cost-summary"><div><span>Totale stimato</span><strong>'+euro(total)+'</strong></div><div><span>Costo a persona</span><strong>'+euro(perPerson)+'</strong></div><div><span>Persone</span><strong>'+safe(data.people??data.persons??"—")+'</strong></div></div>';
